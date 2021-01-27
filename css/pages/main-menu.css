@@ -49,6 +49,8 @@
 /* GRID CATEGORIES */
 .main-menu__grid-categories {
   background-color: rgb(245,246,251);
+  min-height: 100vh;
+  max-width: 100%;
 }
 
   .grid-categories {

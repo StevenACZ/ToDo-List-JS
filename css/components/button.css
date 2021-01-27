@@ -1,0 +1,15 @@
+.btn {
+  padding: 20px 15px 10px 20px;
+  background-color: rgb(255,73,84);
+  border: none;
+  cursor: pointer;
+  border-top-left-radius: 30px;
+  font-size: 30px;
+  color: white;
+}
+
+  .btn__to-add-new-category {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
