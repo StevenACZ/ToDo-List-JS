@@ -8,7 +8,7 @@
 
   .new-category__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 40px 0;
     position: relative;
@@ -16,7 +16,8 @@
 
     .new-category__header > button {
       position: absolute;
-      
+      top: 35px;
+      left: 0;
     }
 
     .new-category__header > h3 {
