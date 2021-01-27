@@ -1,8 +1,14 @@
 /* CATEGORY PROJECTS */
 .category-projects {
+  position: absolute;
   background-image: radial-gradient(circle 600px at 0% 55%, rgb(44,44,101), rgb(107,76,196));;
   min-height: 100vh;
+  max-height: 100%;
   max-width: 100%;
+  width: 100%;
+  top: 0;
+  left: 100%;
+  transition: 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
   /* CATEGORY PROJECT HEADER */

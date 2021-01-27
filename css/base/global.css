@@ -33,9 +33,12 @@ input {
   border-radius: 5px;
 }
 
-/* Main
-.main {
-  min-width: 100%;
-  min-height: 100%;
-  background-color: var(--background-color);
-} */
+.section-active {
+  left: 0% !important;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 100vh;
+}

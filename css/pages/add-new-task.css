@@ -1,9 +1,14 @@
 /* ADD NEW TASK */
 .add-new-task {
+  position: absolute;
   background-image: radial-gradient(circle 600px at 0% 55%, rgb(44,44,101), rgb(107,76,196));;
   min-height: 100vh;
+  max-height: 100%;
   max-width: 100%;
+  width: 100%;
   padding: 0 30px;
+  top: 0;
+  left: 100%;
 }
 
   .new-task__header {
