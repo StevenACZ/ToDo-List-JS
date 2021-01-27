@@ -1,6 +1,7 @@
 /* HEADER */
 .main-menu__header {
-  background-color: rgb(70,57,144); 
+  /* background-color: rgb(70,57,144); */
+  background-image: radial-gradient(circle 382px at 0% 75%, rgb(44,44,101), rgb(107,76,196)); 
 }
 
   /* HEADER FIRST LOOK */
@@ -26,7 +27,7 @@
   /* HEADER SUMMARY */
   .header__summary {
     display: flex;
-    background-color: rgb(57,50,119);
+    background-color: rgb(44,44,101);
   }
   
     .summary {
@@ -60,7 +61,7 @@
     .category__item {
       display: flex;
       justify-content: center;
-    color: black;
+      color: black;
       padding: 40px 0;
       border-bottom: 1px solid rgba(0,0,0,0.1);
       border-right: 1px solid rgba(0,0,0,0.1);
