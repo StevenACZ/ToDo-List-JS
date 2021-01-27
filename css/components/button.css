@@ -3,6 +3,7 @@
   cursor: pointer;
   color: white;
   background: none;
+  outline: none;
 }
 
   .btn--to-add-new {

@@ -1,6 +1,7 @@
 /* HEADER */
 .main-menu__header {
   background-image: radial-gradient(circle 382px at 0% 75%, rgb(44,44,101), rgb(107,76,196)); 
+  position: relative;
 }
 
   /* HEADER FIRST LOOK */
