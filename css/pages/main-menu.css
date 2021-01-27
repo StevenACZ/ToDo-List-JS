@@ -1,0 +1,45 @@
+.main-menu__header {
+  background-color: rgb(70,57,144); 
+}
+
+  /* HEADER FIRST LOOK */
+  .header__first-look {
+    padding: 50px 40px;
+    width: 70%;
+  }
+
+    .first-look__title {
+      font-size: 35px;
+      font-weight: 200;
+    }
+
+    .first-look__subtitle {
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+      .first-look__subtitle > span {
+        font-weight: bold;
+      }
+
+  /* HEADER SUMMARY */
+  .header__summary {
+    display: flex;
+    background-color: rgb(57,50,119);
+  }
+  
+    .summary {
+      display: flex;
+      padding: 20px 0;
+      width: 50%;
+      justify-content: center;
+    }
+
+      .summary__cant {
+        width: 20%;
+      }
+
+      .summary__name {
+        font-size: 13px;
+        width: 35%;
+      }
