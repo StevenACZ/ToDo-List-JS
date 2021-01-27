@@ -1,0 +1,110 @@
+/* CATEGORY PROJECTS */
+.category-projects {
+  background-image: radial-gradient(circle 600px at 0% 55%, rgb(44,44,101), rgb(107,76,196));;
+  min-height: 100vh;
+  max-width: 100%;
+}
+
+  /* CATEGORY PROJECT HEADER */
+  .category-projects__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0px;
+    margin: 0 30px;
+    position: relative;
+  }
+
+    .category-projects__header > button {
+      position: absolute;
+      top: 35px;
+      left: 0;
+    }
+
+    .header__information {
+      text-align: center;
+    }
+
+      .header__information > h3 {
+        font-weight: 100;
+      }
+
+      .header__information > p {
+        opacity: 0.5;
+        margin-top: 5px;
+        font-size: 14px;
+      }
+
+  /* CATEGORY PROJECT MAIN */
+  .category-projects__main {
+    height: 100%;
+    background-color: white;
+  }
+
+    .main__nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+      .main__nav > li {
+        padding: 20px;
+        color: rgba(0,0,0,0.4);
+        font-size: 13px;
+        text-align: center;
+        cursor: pointer;
+      }
+
+    .main__tasks {
+      background-color: rgb(245,246,251);
+    }
+
+      .task {
+        padding: 14px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+      }
+
+        /* TASK BUTTON */
+        .task__button {
+          width: 10%;
+        }
+
+          .task__button > input {
+          }
+
+        /* TASK INFO */
+        .task__info {
+          width: 90%;
+          color: black;
+        }
+
+          .info__main {
+            width: 100%;
+          }
+
+            .info__main > h4 {
+              font-weight: 100;
+            }
+
+            .info__main > p {
+              margin-top: 3px;
+              font-size: 12px;
+              opacity: 0.5;
+            }
+
+          .info__more {
+            margin-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.2);
+            padding-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            justify-items: center;
+          }
+
+            .info__more > button > img {
+              width: 15px;
+            }
+
