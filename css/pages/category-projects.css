@@ -62,6 +62,8 @@
 
     .main__tasks {
       background-color: rgb(245,246,251);
+      display: flex;
+      flex-wrap: wrap;
     }
 
       .task {
@@ -103,7 +105,7 @@
 
           .info__more {
             margin-top: 15px;
-            border-top: 1px solid rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(0,0,0,0.1);
             padding-top: 15px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
