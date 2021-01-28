@@ -19,7 +19,7 @@ const userData = {
         {
           name: 'Comer antes de salir a correr',
           priority: false,
-          complete: false
+          complete: true
         },
         {
           name: 'Aprender React',
@@ -41,7 +41,7 @@ const userData = {
         {
           name: 'Entregar 4 soles a pepito',
           priority: false,
-          complete: false
+          complete: true
         },
         {
           name: 'Hacer deveres con Luis',
@@ -93,17 +93,7 @@ const drawCategories = () => {
   })
 }
 
-const searchCategoryById = (categoryItem) => {
-  return userData.categories.find(category => category.id == categoryItem.id);
-}
-
-const drawAllCategoryProjects = ({name:categoryName, tasks}) => {
-  // Limpiar las tareas anteriores
-  mainTasks.innerHTML = '';
-
-  // Dibujando el nombre de la categoria
-  headerCategoryProjectsTitle.textContent = categoryName;
-
+const drawTasks = (tasks, categoryName) => {
   tasks.forEach( ({name, priority, complete}) => {
     const taskElement = document.createElement('li');
     taskElement.classList.add('task');
@@ -126,7 +116,7 @@ const drawAllCategoryProjects = ({name:categoryName, tasks}) => {
           <img src="./img/icons8-basura-24.png" alt="trash">
         </button>
         <button class="btn task--priority">
-          <img src="./img/icons8-estrella-24.png" alt="star">
+          <img src="${priority ? './img/icons8-estrella-48.png' : './img/icons8-estrella-24.png'}" alt="star">
         </button>
       </div>
     </div>
@@ -134,6 +124,50 @@ const drawAllCategoryProjects = ({name:categoryName, tasks}) => {
     
     mainTasks.appendChild(taskElement);
   })
+}
+
+const drawAllTasks = (tasks, categoryName) => {
+  // Limpiar las tareas anteriores
+  mainTasks.innerHTML = '';
+
+  drawTasks(tasks, categoryName);
+}
+
+const drawDoneTasks = (tasks, categoryName) => {
+  // Limpiar las tareas anteriores
+  mainTasks.innerHTML = '';
+
+  drawTasks(tasks, categoryName)
+}
+
+const drawPriorityTasks = (tasks, categoryName) => {
+  // Limpiar las tareas anteriores
+  mainTasks.innerHTML = '';
+
+  drawTasks(tasks, categoryName)
+}
+
+const searchCategoryById = (categoryItem) => {
+  return userData.categories.find(category => category.id == categoryItem.id);
+}
+
+const searchDoneTasks = ({tasks}) => {
+  return tasks.filter(task => task.complete == true);
+}
+
+const searchPriorityTasks = ({tasks}) => {
+  return tasks.filter(task => task.priority == true);
+}
+
+const drawAllCategoryProjects = ({name:categoryName, tasks}) => {
+  // Limpiar las tareas anteriores
+  mainTasks.innerHTML = '';
+
+  // Dibujando el nombre de la categoria
+  headerCategoryProjectsTitle.textContent = categoryName;
+
+  // Draw all tasks
+  drawAllTasks(tasks, categoryName)
 }
 
 drawCategories()
@@ -148,6 +182,10 @@ const sectionCategoryProjects = document.querySelector('.category-projects');
 const btnBackToMainMenuFromNewCategory = document.querySelector('.btn-back-to-main-menu-from-new-category');
 const btnBackToMainMenuFromCategoryProjects = document.querySelector('.btn-back-to-main-menu-from-category-projects');
 const btnBackToCategoryProjectsFromNewTask = document.querySelector('.btn-back-to-category-projects-from-new-task');
+
+const btnShowAllTasks = document.querySelector('.show-all-tasks');
+const btnShowDoneTasks = document.querySelector('.show-done-tasks');
+const btnShowPriorityTasks = document.querySelector('.show-priority-tasks');
 
 const categoriesItem = document.querySelectorAll('.category__item');
 
@@ -164,9 +202,13 @@ btnToAddNewTask.addEventListener('click', () => {
 });
 
 // Click en una categoria
+let currentCategoryTasks = []
+
 categoriesItem.forEach((categoryItem) => {
   categoryItem.addEventListener('click', () => {
-    drawAllCategoryProjects(searchCategoryById(categoryItem));
+    currentCategoryTasks = searchCategoryById(categoryItem)
+    drawAllCategoryProjects(currentCategoryTasks);
+    
     sectionCategoryProjects.classList.add('section-active');
     btnToAddNewTask.style.zIndex = '20';
   })
@@ -179,9 +221,39 @@ btnBackToMainMenuFromNewCategory.addEventListener('click', () => {
 
 btnBackToMainMenuFromCategoryProjects.addEventListener('click', () => {
   sectionCategoryProjects.classList.remove('section-active');
+  
+  btnShowAllTasks.classList.add('active');
+  btnShowDoneTasks.classList.remove('active');
+  btnShowPriorityTasks.classList.remove('active');
+
   btnToAddNewTask.style.zIndex = '-20';
 })
 
 btnBackToCategoryProjectsFromNewTask.addEventListener('click', () => {
   sectionAddNewTask.classList.remove('section-active');
+})
+
+// SHOW ALL TASKS
+btnShowAllTasks.addEventListener('click', () => {
+  btnShowAllTasks.classList.add('active');
+  btnShowDoneTasks.classList.remove('active');
+  btnShowPriorityTasks.classList.remove('active');
+
+  drawAllTasks(currentCategoryTasks.tasks, currentCategoryTasks.name);
+})
+
+btnShowDoneTasks.addEventListener('click', () => {
+  btnShowDoneTasks.classList.add('active');
+  btnShowAllTasks.classList.remove('active');
+  btnShowPriorityTasks.classList.remove('active');
+  
+  drawDoneTasks(searchDoneTasks(currentCategoryTasks), currentCategoryTasks.name)
+})
+
+btnShowPriorityTasks.addEventListener('click', () => {
+  btnShowPriorityTasks.classList.add('active');
+  btnShowDoneTasks.classList.remove('active');
+  btnShowAllTasks.classList.remove('active');
+  
+  drawPriorityTasks(searchPriorityTasks(currentCategoryTasks), currentCategoryTasks.name)
 })
