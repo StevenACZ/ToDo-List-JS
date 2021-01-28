@@ -75,13 +75,16 @@ userName.textContent = userData.userName;
 
 // Pintando las categorias creadas por el usuario
 const drawCategories = () => {
+  // Limpiar las categorias anteriores
+  gridCategories.innerHTML = '';
+
   userData.categories.forEach(({ id, name, tasks, image }) => {
     const categoryItemElement = document.createElement('li');
     categoryItemElement.classList.add('category__item');
     categoryItemElement.id = id;
     categoryItemElement.innerHTML = `
     <div class="item__icon">
-      <img src="${image}">
+      <img src="${ image }">
     </div>
     <div class="item__name">
       <h4>${ name }</h4>
@@ -123,6 +126,21 @@ const drawTasks = (tasks, categoryName) => {
     `;
     
     mainTasks.appendChild(taskElement);
+  })
+}
+
+// Click en una categoria
+let currentCategoryTasks = []
+
+const clickOnCategoriesItem = () => {
+  categoriesItem.forEach((categoryItem) => {
+    categoryItem.addEventListener('click', () => {
+      currentCategoryTasks = searchCategoryById(categoryItem)
+      drawAllCategoryProjects(currentCategoryTasks);
+      
+      sectionCategoryProjects.classList.add('section-active');
+      btnToAddNewTask.style.zIndex = '20';
+    })
   })
 }
 
@@ -172,6 +190,7 @@ const drawAllCategoryProjects = ({name:categoryName, tasks}) => {
 
 drawCategories()
 
+// Extraccion de datos
 const btnToAddNewCategory = document.querySelector('.btn-to-add-new-category');
 const btnToAddNewTask = document.querySelector('.btn-to-add-new-task');
 
@@ -190,7 +209,47 @@ const btnShowPriorityTasks = document.querySelector('.show-priority-tasks');
 const categoriesItem = document.querySelectorAll('.category__item');
 
 const headerCategoryProjectsTitle = document.querySelector('.header__information__title');
-const mainTasks = document.querySelector('.main__tasks')
+const mainTasks = document.querySelector('.main__tasks');
+
+// NEW CATEGORY FORM
+const newCategoryForm = document.querySelector('.new-category__form');
+const nameInputCategory = document.querySelector('.name-input-category');
+const radioJoob = document.getElementById('joob-radio');
+const radioSchool = document.getElementById('school-radio');
+const radioGrocery = document.getElementById('grocery-radio');
+const radioSchedule = document.getElementById('schedule-radio');
+const radioUser = document.getElementById('user-radio');
+
+// NEW CATEGORY FORM
+newCategoryForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  let imageUrl = '';
+  if (radioJoob.checked) {
+    imageUrl = radioSchool.value;
+  } else if (radioSchool.checked) {
+    imageUrl = radioSchool.value;
+  } else if (radioGrocery.checked) {
+    imageUrl = radioGrocery.value;
+  } else if (radioSchedule.checked) {
+    imageUrl = radioGrocery.value;
+  } else if (radioUser.checked) {
+    imageUrl = radioGrocery.value;
+  }
+
+  const newCategory = {
+    id: 'a32' + Math.floor(Math.random() * 2000) + Math.floor(Math.random() * 10000) + '14',
+    name: nameInputCategory.value,
+    image: imageUrl,
+    tasks: []
+  }
+
+  userData.categories.push(newCategory);
+  nameInputCategory.value = ''
+  sectionAddNewCategory.classList.remove('section-active');
+  clickOnCategoriesItem()
+  drawCategories()
+})
 
 // OPEN BUTTONS
 btnToAddNewCategory.addEventListener('click', () => {
@@ -201,18 +260,7 @@ btnToAddNewTask.addEventListener('click', () => {
   sectionAddNewTask.classList.add('section-active');
 });
 
-// Click en una categoria
-let currentCategoryTasks = []
-
-categoriesItem.forEach((categoryItem) => {
-  categoryItem.addEventListener('click', () => {
-    currentCategoryTasks = searchCategoryById(categoryItem)
-    drawAllCategoryProjects(currentCategoryTasks);
-    
-    sectionCategoryProjects.classList.add('section-active');
-    btnToAddNewTask.style.zIndex = '20';
-  })
-})
+clickOnCategoriesItem()
 
 // BACK BUTTONS
 btnBackToMainMenuFromNewCategory.addEventListener('click', () => {

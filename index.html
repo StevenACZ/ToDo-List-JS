@@ -83,23 +83,29 @@
         </header>
 
         <form class="new-category__form">
-          <input class="input" type="text" placeholder="New Category Name">
+          <input class="input name-input-category" type="text" placeholder="New Category Name">
+          
           <ul class="category__images">
-            <li class="category__img">
+            <label class="category__img">
+              <input type="radio" id="joob-radio" name="category__images" value="./img/icons8-buscar-trabajo-correspondiente-24.png">
               <img src="./img/icons8-buscar-trabajo-correspondiente-24.png" alt="joob">
-            </li>
-            <li class="category__img">
+            </label>
+            <label class="category__img">
+              <input type="radio" id="school-radio" name="category__images" value="./img/icons8-edificio-escolar-30.png">
               <img src="./img/icons8-edificio-escolar-30.png" alt="school">
-            </li>
-            <li class="category__img">
+            </label>
+            <label class="category__img">
+              <input type="radio" id="grocery-radio" name="category__images" value="./img/icons8-grocery-shelf-50.png">
               <img src="./img/icons8-grocery-shelf-50.png" alt="grocery">
-            </li>
-            <li class="category__img">
+            </label>
+            <label class="category__img">
+              <input type="radio" id="schedule-radio" name="category__images" value="./img/icons8-horas-extras-50.png">
               <img src="./img/icons8-horas-extras-50.png" alt="Schedule">
-            </li>
-            <li class="category__img">
+            </label>
+            <label class="category__img">
+              <input type="radio" id="user-radio" name="category__images" value="./img/icons8-user-clock-32.png">
               <img src="./img/icons8-user-clock-32.png" alt="user">
-            </li>
+            </label>
           </ul>
           <input class="submit" type="submit" value="Add category">
         </form>
