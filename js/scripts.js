@@ -139,7 +139,7 @@ const drawTask = ({id, name, priority, complete}, categoryName, idCategory) => {
   newTaskElement.title = idCategory;
   newTaskElement.innerHTML = `
   <div class="task__button">
-    <input type="checkbox" ${ complete && 'checked' }>
+    <div class="done-button ${ complete && 'active' } btn-done-task-js"></div>
   </div>
   
   <div class="task__info">
@@ -155,7 +155,7 @@ const drawTask = ({id, name, priority, complete}, categoryName, idCategory) => {
       <button class="btn task--delete btn-delete-task-js">
         <img src="./img/icons8-basura-24.png" alt="trash">
       </button>
-      <button class="btn task--priority">
+      <button class="btn task--priority btn-priority-task-js">
         <img src="${priority ? './img/icons8-estrella-48.png' : './img/icons8-estrella-24.png'}" alt="star">
       </button>
     </div>
@@ -190,6 +190,7 @@ function renderAllTasks({id, name, tasks}) {
   })
 
   deleteTasks()
+  doneTasks();
 }
 
 function renderDoneTasks({id, name, tasks}) {
@@ -204,6 +205,7 @@ function renderDoneTasks({id, name, tasks}) {
   })
 
   deleteTasks()
+  doneTasks();
 }
 
 function renderPriorityTasks({id, name, tasks}) {
@@ -217,7 +219,8 @@ function renderPriorityTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
-  deleteTasks()
+  deleteTasks();
+  doneTasks();
 }
 
 const searchDoneTasks = (tasks) => {
@@ -310,6 +313,47 @@ function deleteTasks() {
 };
 
 // DONE TASK
+function doneTasks() {
+  const btnsDoneTask = document.querySelectorAll('.btn-done-task-js');
+  btnsDoneTask.forEach((btnDoneTask) => {
+    btnDoneTask.addEventListener('click', () => {
+      let currentTaskId = btnDoneTask.parentNode.parentNode.id;
+      let currentCategoryId = btnDoneTask.parentNode.parentNode.title;
+
+      // GET THE CURRENT CATEGORY
+      let nowCategory = userData.categories.find(category => category.id == currentCategoryId);
+
+      // UPDATE THE TASK FROM THE OTHERS TASKS
+      let updateTask = nowCategory.tasks.find(task => task.id == currentTaskId);
+      
+      updateTask = {
+        ...updateTask,
+        complete: !updateTask.complete,
+      }
+      
+      // DELETE THE TASK FROM THE OTHERS TASKS
+      let updateTasks = nowCategory.tasks.filter(task => task.id !== currentTaskId);
+
+      // PUSH THE NEW CURRENT TASK
+      updateTasks.push(updateTask)
+
+      // // NOW CURRENT CATEGORY DON'T HAVE THE CURRENT TASK WHAT WE WANNA DELETE
+      nowCategory.tasks = updateTasks;
+
+      // // DELETE THE CURRENT CATEGORY FROM THE USERDATA
+      let withoutCurrentCategory = userData.categories.filter(category => category.id !== currentCategoryId);
+
+      // // PUSH THE NEW CURRENT CATEGORY WITHOUT THE TASK WHAT WE WANNA DELETE
+      withoutCurrentCategory.push(nowCategory);
+
+      // // WE CHANGE THE OLD DATA WITH THE UPDATE DATA
+      userData.categories = withoutCurrentCategory;
+
+      // // UPDATE FROM THE DOM
+      console.log(btnDoneTask.classList.toggle('active'));
+    })
+  })
+}
 
 // PRIORITY TASK
 
