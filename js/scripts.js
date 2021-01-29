@@ -67,16 +67,43 @@ const userData = {
 
 function init() {
   renderCategories()
+  clickOverCategoriesOpenTasks()
+}
+
+function findCategory(categoryItem) {
+  return userData.categories.find(category => category.id == categoryItem.id);
+}
+
+function clickOverCategoriesOpenTasks() {
+  const allCategoriesItem = document.querySelectorAll('.category__item');
+  allCategoriesItem.forEach(categoryItem => {
+    categoryItem.addEventListener('click', () => {
+      let currentCategory = findCategory(categoryItem);
+      
+      renderAllTasks(currentCategory);
+      openSectionCategoryProjects();
+    })
+  })
 }
 
 function openSectionAddNewCategory() {
-  const sectionAddNewCategory = document.querySelector('.add-new-category-js')
+  const sectionAddNewCategory = document.querySelector('.add-new-category-js');
   sectionAddNewCategory.classList.add('section-active');
 }
 
 function closeSectionAddNewCategory() {
-  const sectionAddNewCategory = document.querySelector('.add-new-category-js')
+  const sectionAddNewCategory = document.querySelector('.add-new-category-js');
   sectionAddNewCategory.classList.remove('section-active');
+}
+
+function openSectionCategoryProjects() {
+  const sectionCategoryProjects = document.querySelector('.category-projects-js');
+  sectionCategoryProjects.classList.add('section-active');
+}
+
+function closeSectionCategoryProjects() {
+  const sectionCategoryProjects = document.querySelector('.category-projects-js');
+  sectionCategoryProjects.classList.remove('section-active');
 }
 
 function drawCategory({id, name, image, tasks}) {
@@ -96,6 +123,37 @@ function drawCategory({id, name, image, tasks}) {
   return newCategoryElement;
 }
 
+const drawTask = ({name, priority, complete}, categoryName) => {
+  let newTaskElement = document.createElement('li');
+  newTaskElement.classList.add('task');
+  newTaskElement.innerHTML = `
+  <div class="task__button">
+    <input type="checkbox" ${ complete && 'checked' }>
+  </div>
+  
+  <div class="task__info">
+    <div class="info__main">
+      <h4>${name}</h4>
+      <p>${categoryName}</p>
+    </div>
+
+    <div class="info__more">
+      <button class="btn task--edit">
+        <img src="./img/icons8-editar-24.png" alt="edit">
+      </button>
+      <button class="btn task--delete">
+        <img src="./img/icons8-basura-24.png" alt="trash">
+      </button>
+      <button class="btn task--priority">
+        <img src="${priority ? './img/icons8-estrella-48.png' : './img/icons8-estrella-24.png'}" alt="star">
+      </button>
+    </div>
+  </div>
+  `;
+
+  return newTaskElement;
+}
+
 // RENDER CATEGORIES
 function renderCategories() {
   const gridCategories = document.querySelector('.grid-categories-js');
@@ -109,17 +167,68 @@ function renderCategories() {
   })
 }
 
+function renderAllTasks({name, tasks}) {
+  const gridTasks = document.querySelector('.main__tasks-js');
+
+  // CLEAR GRID
+  gridTasks.innerHTML = '';
+
+  // DRAW TASK
+  tasks.forEach(task => {
+    gridTasks.appendChild(drawTask(task, name));
+  })
+}
+
+function renderDoneTasks({id, image, name, tasks}) {
+  const gridTasks = document.querySelector('.main__tasks-js');
+
+  // CLEAR GRID
+  gridTasks.innerHTML = '';
+
+  // DRAW TASK
+  searchDoneTasks(tasks).forEach(task => {
+    gridTasks.appendChild(drawTask(task));
+  })
+}
+
+function renderPriorityTasks({id, image, name, tasks}) {
+  const gridTasks = document.querySelector('.main__tasks-js');
+
+  // CLEAR GRID
+  gridTasks.innerHTML = '';
+
+  // DRAW TASK
+  searchPriorityTasks(tasks).forEach(task => {
+    gridTasks.appendChild(drawTask(task));
+  })
+}
+
+const searchDoneTasks = (tasks) => {
+  return tasks.filter(task => task.complete == true);
+}
+
+const searchPriorityTasks = (tasks) => {
+  return tasks.filter(task => task.priority == true);
+}
+
 //// SECTION - MAIN MENU ////
 const btnOpenSectionAddNewCategory = document.querySelector('.btn-open-section-add-new-category-js');
 btnOpenSectionAddNewCategory.addEventListener('click', () => {
-  openSectionAddNewCategory()
-})
+  openSectionAddNewCategory();
+});
 
 //// SECTION - ADD NEW CATEGORY ////
 const btnCloseSectionAddNewCategory = document.querySelector('.btn-close-section-add-new-category-js');
 btnCloseSectionAddNewCategory.addEventListener('click', () => {
-  closeSectionAddNewCategory()
-})
+  closeSectionAddNewCategory();
+});
+
+//// SECTION - CATEGORY PROJECTS ////
+const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');
+btnCloseSectionCategoryProjects.addEventListener('click', () => {
+  closeSectionCategoryProjects();
+});
+
 
 const formAddNewCategory = document.querySelector('.form-add-new-category-js');
 formAddNewCategory.addEventListener('submit', (event) => {
