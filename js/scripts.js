@@ -7,16 +7,19 @@ const userData = {
       image: './img/icons8-user-clock-32.png',
       tasks: [
         {
+          id: 'sadasd2',
           name: 'Corres a las 5pm',
           priority: true,
           complete: false
         },
         {
+          id: 'sa23dasd2',
           name: 'Comer antes de salir a correr',
           priority: false,
           complete: true
         },
         {
+          id: 'sada23123123sd2',
           name: 'Aprender React',
           priority: true,
           complete: false
@@ -29,21 +32,25 @@ const userData = {
       image: './img/icons8-buscar-trabajo-correspondiente-24.png',
       tasks: [
         {
+          id: 's2d2',
           name: 'Ir a la clase de CTA',
           priority: true,
           complete: false
         },
         {
+          id: 'AAAAA',
           name: 'Entregar 4 soles a pepito',
           priority: false,
           complete: true
         },
         {
-          name: 'Hacer deveres con Luis',
+          id: 'sadasdasd223',
+          name: 'Hacer deveres con Pepe',
           priority: true,
           complete: false
         },
         {
+          id: 'AAA332332',
           name: 'Jaja prueba 1',
           priority: false,
           complete: true
@@ -56,6 +63,7 @@ const userData = {
       image: './img/icons8-edificio-escolar-30.png',
       tasks: [
         {
+          id: 'WTF',
           name: 'Hacer un ToDo List con JavaScript',
           priority: true,
           complete: false
@@ -74,11 +82,12 @@ function findCategory(categoryItem) {
   return userData.categories.find(category => category.id == categoryItem.id);
 }
 
+let currentCategory = {}
 function clickOverCategoriesOpenTasks() {
   const allCategoriesItem = document.querySelectorAll('.category__item');
   allCategoriesItem.forEach(categoryItem => {
     categoryItem.addEventListener('click', () => {
-      let currentCategory = findCategory(categoryItem);
+      currentCategory = findCategory(categoryItem);
       
       renderAllTasks(currentCategory);
       openSectionCategoryProjects();
@@ -123,9 +132,10 @@ function drawCategory({id, name, image, tasks}) {
   return newCategoryElement;
 }
 
-const drawTask = ({name, priority, complete}, categoryName) => {
+const drawTask = ({id, name, priority, complete}, categoryName) => {
   let newTaskElement = document.createElement('li');
   newTaskElement.classList.add('task');
+  newTaskElement.id = id;
   newTaskElement.innerHTML = `
   <div class="task__button">
     <input type="checkbox" ${ complete && 'checked' }>
@@ -179,7 +189,7 @@ function renderAllTasks({name, tasks}) {
   })
 }
 
-function renderDoneTasks({id, image, name, tasks}) {
+function renderDoneTasks({name, tasks}) {
   const gridTasks = document.querySelector('.main__tasks-js');
 
   // CLEAR GRID
@@ -187,11 +197,11 @@ function renderDoneTasks({id, image, name, tasks}) {
 
   // DRAW TASK
   searchDoneTasks(tasks).forEach(task => {
-    gridTasks.appendChild(drawTask(task));
+    gridTasks.appendChild(drawTask(task, name));
   })
 }
 
-function renderPriorityTasks({id, image, name, tasks}) {
+function renderPriorityTasks({name, tasks}) {
   const gridTasks = document.querySelector('.main__tasks-js');
 
   // CLEAR GRID
@@ -199,7 +209,7 @@ function renderPriorityTasks({id, image, name, tasks}) {
 
   // DRAW TASK
   searchPriorityTasks(tasks).forEach(task => {
-    gridTasks.appendChild(drawTask(task));
+    gridTasks.appendChild(drawTask(task, name));
   })
 }
 
@@ -222,13 +232,6 @@ const btnCloseSectionAddNewCategory = document.querySelector('.btn-close-section
 btnCloseSectionAddNewCategory.addEventListener('click', () => {
   closeSectionAddNewCategory();
 });
-
-//// SECTION - CATEGORY PROJECTS ////
-const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');
-btnCloseSectionCategoryProjects.addEventListener('click', () => {
-  closeSectionCategoryProjects();
-});
-
 
 const formAddNewCategory = document.querySelector('.form-add-new-category-js');
 formAddNewCategory.addEventListener('submit', (event) => {
@@ -266,8 +269,43 @@ formAddNewCategory.addEventListener('submit', (event) => {
   init();
 })
 
+//// SECTION - CATEGORY PROJECTS ////
+const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');
+btnCloseSectionCategoryProjects.addEventListener('click', () => {
+  closeSectionCategoryProjects();
+});
 
+const btnShowAllTasks = document.querySelector('.show-all-tasks-js');
+const btnShowDoneTasks = document.querySelector('.show-done-tasks-js');
+const btnShowPriorityTasks = document.querySelector('.show-priority-tasks-js');
 
+// SHOW ALL TASKS
+btnShowAllTasks.addEventListener('click', () => {
+  btnShowAllTasks.classList.add('active');
+  btnShowDoneTasks.classList.remove('active');
+  btnShowPriorityTasks.classList.remove('active');
+
+  // console.log(currentCategory)
+  renderAllTasks(currentCategory);
+})
+
+// SHOW DONE TASKS
+btnShowDoneTasks.addEventListener('click', () => {
+  btnShowDoneTasks.classList.add('active');
+  btnShowAllTasks.classList.remove('active');
+  btnShowPriorityTasks.classList.remove('active');
+  
+  renderDoneTasks(currentCategory)
+})
+
+// SHOW PRIORITY TASKS
+btnShowPriorityTasks.addEventListener('click', () => {
+  btnShowPriorityTasks.classList.add('active');
+  btnShowDoneTasks.classList.remove('active');
+  btnShowAllTasks.classList.remove('active');
+  
+  renderPriorityTasks(currentCategory);
+})
 
 init();
 
