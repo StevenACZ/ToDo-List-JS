@@ -132,10 +132,11 @@ function drawCategory({id, name, image, tasks}) {
   return newCategoryElement;
 }
 
-const drawTask = ({id, name, priority, complete}, categoryName) => {
+const drawTask = ({id, name, priority, complete}, categoryName, idCategory) => {
   let newTaskElement = document.createElement('li');
   newTaskElement.classList.add('task');
   newTaskElement.id = id;
+  newTaskElement.title = idCategory;
   newTaskElement.innerHTML = `
   <div class="task__button">
     <input type="checkbox" ${ complete && 'checked' }>
@@ -148,10 +149,10 @@ const drawTask = ({id, name, priority, complete}, categoryName) => {
     </div>
 
     <div class="info__more">
-      <button class="btn task--edit">
+      <button class="btn task--edit btn-edit-task-js">
         <img src="./img/icons8-editar-24.png" alt="edit">
       </button>
-      <button class="btn task--delete">
+      <button class="btn task--delete btn-delete-task-js">
         <img src="./img/icons8-basura-24.png" alt="trash">
       </button>
       <button class="btn task--priority">
@@ -177,7 +178,7 @@ function renderCategories() {
   })
 }
 
-function renderAllTasks({name, tasks}) {
+function renderAllTasks({id, name, tasks}) {
   const gridTasks = document.querySelector('.main__tasks-js');
 
   // CLEAR GRID
@@ -185,11 +186,13 @@ function renderAllTasks({name, tasks}) {
 
   // DRAW TASK
   tasks.forEach(task => {
-    gridTasks.appendChild(drawTask(task, name));
+    gridTasks.appendChild(drawTask(task, name, id));
   })
+
+  deleteTasks()
 }
 
-function renderDoneTasks({name, tasks}) {
+function renderDoneTasks({id, name, tasks}) {
   const gridTasks = document.querySelector('.main__tasks-js');
 
   // CLEAR GRID
@@ -197,11 +200,13 @@ function renderDoneTasks({name, tasks}) {
 
   // DRAW TASK
   searchDoneTasks(tasks).forEach(task => {
-    gridTasks.appendChild(drawTask(task, name));
+    gridTasks.appendChild(drawTask(task, name, id));
   })
+
+  deleteTasks()
 }
 
-function renderPriorityTasks({name, tasks}) {
+function renderPriorityTasks({id, name, tasks}) {
   const gridTasks = document.querySelector('.main__tasks-js');
 
   // CLEAR GRID
@@ -209,8 +214,10 @@ function renderPriorityTasks({name, tasks}) {
 
   // DRAW TASK
   searchPriorityTasks(tasks).forEach(task => {
-    gridTasks.appendChild(drawTask(task, name));
+    gridTasks.appendChild(drawTask(task, name, id));
   })
+
+  deleteTasks()
 }
 
 const searchDoneTasks = (tasks) => {
@@ -269,6 +276,43 @@ formAddNewCategory.addEventListener('submit', (event) => {
   init();
 })
 
+// TASKS OPTIONS
+// DELETE TASK
+function deleteTasks() {
+  const btnsDeleteTask = document.querySelectorAll('.btn-delete-task-js');
+  btnsDeleteTask.forEach((btnDeleteTask) => {
+    btnDeleteTask.addEventListener('click', () => {
+      let currentTaskId = btnDeleteTask.parentNode.parentNode.parentNode.id;
+      let currentCategoryId = btnDeleteTask.parentNode.parentNode.parentNode.title;
+
+      // GET THE CURRENT CATEGORY
+      let nowCategory = userData.categories.find(category => category.id == currentCategoryId);
+      
+      // DELETE THE TASK FROM THE OTHERS TASKS
+      let updateTasks = nowCategory.tasks.filter(task => task.id !== currentTaskId);
+
+      // NOW CURRENT CATEGORY DON'T HAVE THE CURRENT TASK WHAT WE WANNA DELETE
+      nowCategory.tasks = updateTasks;
+
+      // DELETE THE CURRENT CATEGORY FROM THE USERDATA
+      let withoutCurrentCategory = userData.categories.filter(category => category.id !== currentCategoryId);
+
+      // PUSH THE NEW CURRENT CATEGORY WITHOUT THE TASK WHAT WE WANNA DELETE
+      withoutCurrentCategory.push(nowCategory);
+
+      // WE CHANGE THE OLD DATA WITH THE UPDATE DATA
+      userData.categories = withoutCurrentCategory;
+
+      // DELETE FROM THE DOM
+      btnDeleteTask.parentNode.parentNode.parentNode.style.display = 'none';
+    });
+  });
+};
+
+// DONE TASK
+
+// PRIORITY TASK
+
 //// SECTION - CATEGORY PROJECTS ////
 const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');
 btnCloseSectionCategoryProjects.addEventListener('click', () => {
@@ -285,7 +329,6 @@ btnShowAllTasks.addEventListener('click', () => {
   btnShowDoneTasks.classList.remove('active');
   btnShowPriorityTasks.classList.remove('active');
 
-  // console.log(currentCategory)
   renderAllTasks(currentCategory);
 })
 
@@ -308,7 +351,6 @@ btnShowPriorityTasks.addEventListener('click', () => {
 })
 
 init();
-
 
 // // API MANUAL
 // const userName = document.querySelector('.user-name');
