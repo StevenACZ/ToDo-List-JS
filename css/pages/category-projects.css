@@ -85,7 +85,17 @@
           width: 10%;
         }
 
-          .task__button > input {
+          .done-button {
+            border: 1px solid rgba(0,0,0,0.4);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+          }
+
+          .done-button.active {
+            border: none;
+            background-color: rgb(98,71,182);
           }
 
         /* TASK INFO */

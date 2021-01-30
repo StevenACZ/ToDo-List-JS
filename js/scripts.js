@@ -155,9 +155,8 @@ const drawTask = ({id, name, priority, complete}, categoryName, idCategory) => {
       <button class="btn task--delete btn-delete-task-js">
         <img src="./img/icons8-basura-24.png" alt="trash">
       </button>
-      <button class="btn task--priority btn-priority-task-js">
-        <img src="${priority ? './img/icons8-estrella-48.png' : './img/icons8-estrella-24.png'}" alt="star">
-      </button>
+
+      <span class="task--priority btn-priority-task-js ${ complete && 'active' }"></span>
     </div>
   </div>
   `;
@@ -189,7 +188,8 @@ function renderAllTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
-  deleteTasks()
+  priorityTasks();
+  deleteTasks();
   doneTasks();
 }
 
@@ -204,7 +204,8 @@ function renderDoneTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
-  deleteTasks()
+  priorityTasks();
+  deleteTasks();
   doneTasks();
 }
 
@@ -219,6 +220,7 @@ function renderPriorityTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
+  priorityTasks();
   deleteTasks();
   doneTasks();
 }
@@ -350,12 +352,53 @@ function doneTasks() {
       userData.categories = withoutCurrentCategory;
 
       // // UPDATE FROM THE DOM
-      console.log(btnDoneTask.classList.toggle('active'));
+      btnDoneTask.classList.toggle('active');
     })
   })
 }
 
 // PRIORITY TASK
+function priorityTasks() {
+  const btnsPriorityTask = document.querySelectorAll('.btn-priority-task-js');
+  btnsPriorityTask.forEach((btnPriorityTask) => {
+    btnPriorityTask.addEventListener('click', () => {
+      let currentTaskId = btnPriorityTask.parentNode.parentNode.parentNode.id;
+      let currentCategoryId = btnPriorityTask.parentNode.parentNode.parentNode.title;
+
+      // GET THE CURRENT CATEGORY
+      let nowCategory = userData.categories.find(category => category.id == currentCategoryId);
+
+      // UPDATE THE TASK FROM THE OTHERS TASKS
+      let updateTask = nowCategory.tasks.find(task => task.id == currentTaskId);
+      
+      updateTask = {
+        ...updateTask,
+        priority: !updateTask.priority,
+      }
+      
+      // DELETE THE TASK FROM THE OTHERS TASKS
+      let updateTasks = nowCategory.tasks.filter(task => task.id !== currentTaskId);
+
+      // PUSH THE NEW CURRENT TASK
+      updateTasks.push(updateTask)
+
+      // // NOW CURRENT CATEGORY DON'T HAVE THE CURRENT TASK WHAT WE WANNA DELETE
+      nowCategory.tasks = updateTasks;
+
+      // // DELETE THE CURRENT CATEGORY FROM THE USERDATA
+      let withoutCurrentCategory = userData.categories.filter(category => category.id !== currentCategoryId);
+
+      // // PUSH THE NEW CURRENT CATEGORY WITHOUT THE TASK WHAT WE WANNA DELETE
+      withoutCurrentCategory.push(nowCategory);
+
+      // // WE CHANGE THE OLD DATA WITH THE UPDATE DATA
+      userData.categories = withoutCurrentCategory;
+
+      // // UPDATE FROM THE DOM
+      btnPriorityTask.classList.toggle('active');
+    })
+  })
+}
 
 //// SECTION - CATEGORY PROJECTS ////
 const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');

@@ -1,9 +1,7 @@
 @import './base/typography.css';
 @import './base/global.css';
 
-@import './components/header.css';
 @import './components/button.css';
-@import './components/grid.css';
 
 @import './pages/main-menu.css';
 @import './pages/add-new-category.css';
