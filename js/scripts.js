@@ -8,19 +8,43 @@ const userData = {
       tasks: [
         {
           id: 'sadasd2',
-          name: 'Corres a las 5pm',
+          name: 'Prueba 01',
           priority: true,
           complete: false
         },
         {
           id: 'sa23dasd2',
-          name: 'Comer antes de salir a correr',
+          name: 'Call Mrs. Barbara',
           priority: false,
           complete: true
         },
         {
-          id: 'sada23123123sd2',
-          name: 'Aprender React',
+          id: 'asda212',
+          name: 'Make wareframing',
+          priority: true,
+          complete: false
+        },
+        {
+          id: 'asd22a212',
+          name: 'Meeting with new team',
+          priority: false,
+          complete: false
+        },
+        {
+          id: 'asZda212',
+          name: 'Make smarthome app concept',
+          priority: false,
+          complete: false
+        },
+        {
+          id: 'asZ1902da212',
+          name: 'Pick up laundry',
+          priority: true,
+          complete: true
+        },
+        {
+          id: '1234988',
+          name: 'Drink Milk',
           priority: true,
           complete: false
         }
@@ -33,27 +57,63 @@ const userData = {
       tasks: [
         {
           id: 's2d2',
-          name: 'Ir a la clase de CTA',
+          name: 'P01',
           priority: true,
           complete: false
         },
         {
           id: 'AAAAA',
-          name: 'Entregar 4 soles a pepito',
+          name: 'P02',
           priority: false,
           complete: true
         },
         {
           id: 'sadasdasd223',
-          name: 'Hacer deveres con Pepe',
+          name: 'P03',
           priority: true,
           complete: false
         },
         {
           id: 'AAA332332',
-          name: 'Jaja prueba 1',
+          name: 'P04',
           priority: false,
           complete: true
+        },
+        {
+          id: 'AAA3111',
+          name: 'P05',
+          priority: true,
+          complete: true
+        },
+        {
+          id: 'AAAqwe32',
+          name: 'P06',
+          priority: false,
+          complete: false
+        },
+        {
+          id: 'pepe821',
+          name: 'P07',
+          priority: true,
+          complete: false
+        },
+        {
+          id: 'falso123',
+          name: 'P08',
+          priority: false,
+          complete: false
+        },
+        {
+          id: 'AA1234',
+          name: 'P09',
+          priority: false,
+          complete: false
+        },
+        {
+          id: 'AA177662',
+          name: 'P10',
+          priority: true,
+          complete: false
         }
       ]
     },
@@ -66,6 +126,18 @@ const userData = {
           id: 'WTF',
           name: 'Hacer un ToDo List con JavaScript',
           priority: true,
+          complete: true
+        },
+        {
+          id: 'WTF1',
+          name: 'Learn JavaScript',
+          priority: true,
+          complete: false
+        },
+        {
+          id: 'WTF3',
+          name: 'REACT',
+          priority: false,
           complete: false
         }
       ]
@@ -243,7 +315,7 @@ function drawCategory({id, name, image, tasks}) {
       <img src="${image}" alt="icon">
     </div>
     <div class="item__name">
-      <h4>${name}</h4>
+      <h4>${name.split(' ').length > 1 ? `${name.split(' ')[0]}` : `${name}`}${name.split(' ').length > 1 ? '<br />' : ''}${name.split(' ').length > 1 ? `${name.split(' ')[1]}` : ''}${name.split(' ').length > 2 ? '...' : ''}</h4>
       <p>${tasks.length} tasks</p>
     </div>
   `;
