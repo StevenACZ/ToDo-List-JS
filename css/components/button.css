@@ -6,6 +6,10 @@
   outline: none;
 }
 
+  .btn-to-add-new-category {
+    z-index: 20;
+  }
+
   .btn--to-add-new {
     font-size: 30px;
     border-top-left-radius: 30px;

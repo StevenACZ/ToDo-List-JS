@@ -107,12 +107,16 @@ function closeSectionAddNewCategory() {
 
 function openSectionCategoryProjects() {
   const sectionCategoryProjects = document.querySelector('.category-projects-js');
+  const btnOpenSectionAddNewTask = document.querySelector('.btn-open-section-add-new-task-js');
   sectionCategoryProjects.classList.add('section-active');
+  btnOpenSectionAddNewTask.style.zIndex = 20;
 }
 
 function closeSectionCategoryProjects() {
   const sectionCategoryProjects = document.querySelector('.category-projects-js');
+  const btnOpenSectionAddNewTask = document.querySelector('.btn-open-section-add-new-task-js');
   sectionCategoryProjects.classList.remove('section-active');
+  btnOpenSectionAddNewTask.style.zIndex = -20;
 }
 
 function openSectionAddNewTask() {
@@ -509,6 +513,16 @@ const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-secti
 btnCloseSectionCategoryProjects.addEventListener('click', () => {
   closeSectionCategoryProjects();
 });
+
+const btnOpenSectionAddNewTask = document.querySelector('.btn-open-section-add-new-task-js');
+btnOpenSectionAddNewTask.addEventListener('click', () => {
+  openSectionAddNewTask();
+})
+
+const btnCloseSectionAddNewTask = document.querySelector('.btn-close-section-add-new-task-js');
+btnCloseSectionAddNewTask.addEventListener('click', () => {
+  closeSectionAddNewTask();
+})
 
 const btnShowAllTasks = document.querySelector('.show-all-tasks-js');
 const btnShowDoneTasks = document.querySelector('.show-done-tasks-js');
