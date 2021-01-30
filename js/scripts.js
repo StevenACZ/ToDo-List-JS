@@ -155,8 +155,8 @@ const drawTask = ({id, name, priority, complete}, categoryName, idCategory) => {
       <button class="btn task--delete btn-delete-task-js">
         <img src="./img/icons8-basura-24.png" alt="trash">
       </button>
-
-      <span class="task--priority btn-priority-task-js ${ complete && 'active' }"></span>
+      <button class="btn task--priority btn-priority-task-js ${ priority && 'active' }">
+      </button>
     </div>
   </div>
   `;
@@ -281,7 +281,7 @@ formAddNewCategory.addEventListener('submit', (event) => {
   init();
 })
 
-// TASKS OPTIONS
+//// TASKS OPTIONS ////
 // DELETE TASK
 function deleteTasks() {
   const btnsDeleteTask = document.querySelectorAll('.btn-delete-task-js');
@@ -353,6 +353,10 @@ function doneTasks() {
 
       // // UPDATE FROM THE DOM
       btnDoneTask.classList.toggle('active');
+
+      if (btnDoneTask.parentElement.parentElement.parentElement.parentElement.querySelector('.show-done-tasks-js').className.includes('active')) {
+        renderDoneTasks(currentCategory);
+      }
     })
   })
 }
@@ -365,40 +369,50 @@ function priorityTasks() {
       let currentTaskId = btnPriorityTask.parentNode.parentNode.parentNode.id;
       let currentCategoryId = btnPriorityTask.parentNode.parentNode.parentNode.title;
 
+      console.log(currentCategoryId, 'CATEGORY ID')
+      console.log(currentTaskId, 'TASK ID')
+
       // GET THE CURRENT CATEGORY
       let nowCategory = userData.categories.find(category => category.id == currentCategoryId);
 
-      // UPDATE THE TASK FROM THE OTHERS TASKS
-      let updateTask = nowCategory.tasks.find(task => task.id == currentTaskId);
+      // TAKE THE CURREN TASK
+      let nowTask = nowCategory.tasks.find(task => task.id == currentTaskId);
+      console.log(nowTask)
       
-      updateTask = {
-        ...updateTask,
-        priority: !updateTask.priority,
+      // UPDATE CURRENT TASK
+      nowTask = {
+        ...nowTask,
+        priority: !nowTask.priority,
       }
       
       // DELETE THE TASK FROM THE OTHERS TASKS
       let updateTasks = nowCategory.tasks.filter(task => task.id !== currentTaskId);
 
       // PUSH THE NEW CURRENT TASK
-      updateTasks.push(updateTask)
+      updateTasks.push(nowTask)
 
-      // // NOW CURRENT CATEGORY DON'T HAVE THE CURRENT TASK WHAT WE WANNA DELETE
+      // NOW CURRENT CATEGORY DON'T HAVE THE CURRENT TASK WHAT WE WANNA DELETE
       nowCategory.tasks = updateTasks;
 
-      // // DELETE THE CURRENT CATEGORY FROM THE USERDATA
+      // DELETE THE CURRENT CATEGORY FROM THE USERDATA
       let withoutCurrentCategory = userData.categories.filter(category => category.id !== currentCategoryId);
 
-      // // PUSH THE NEW CURRENT CATEGORY WITHOUT THE TASK WHAT WE WANNA DELETE
+      // PUSH THE NEW CURRENT CATEGORY WITHOUT THE TASK WHAT WE WANNA DELETE
       withoutCurrentCategory.push(nowCategory);
 
-      // // WE CHANGE THE OLD DATA WITH THE UPDATE DATA
+      // WE CHANGE THE OLD DATA WITH THE UPDATE DATA
       userData.categories = withoutCurrentCategory;
 
       // // UPDATE FROM THE DOM
       btnPriorityTask.classList.toggle('active');
-    })
-  })
-}
+
+      // console.log(btnPriorityTask.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.show-priority-tasks-js').className.includes('active'));
+      if (btnPriorityTask.parentElement.parentElement.parentElement.parentElement.parentElement.querySelector('.show-priority-tasks-js').className.includes('active')) {
+        renderPriorityTasks(currentCategory);
+      };
+    });
+  });
+};
 
 //// SECTION - CATEGORY PROJECTS ////
 const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');
