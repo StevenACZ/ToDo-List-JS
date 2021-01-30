@@ -115,6 +115,26 @@ function closeSectionCategoryProjects() {
   sectionCategoryProjects.classList.remove('section-active');
 }
 
+function openSectionAddNewTask() {
+  const sectionAddNewTask = document.querySelector('.add-new-task-js');
+  sectionAddNewTask.classList.add('section-active');
+}
+
+function closeSectionAddNewTask() {
+  const sectionAddNewTask = document.querySelector('.add-new-task-js');
+  sectionAddNewTask.classList.remove('section-active');
+}
+
+function openSectionEditTask() {
+  const sectionEditTask = document.querySelector('.edit-task-js');
+  sectionEditTask.classList.add('section-active');
+}
+
+function closeSectionEditTask() {
+  const sectionEditTask = document.querySelector('.edit-task-js');
+  sectionEditTask.classList.remove('section-active');
+}
+
 function drawCategory({id, name, image, tasks}) {
   let newCategoryElement = document.createElement('li');
   newCategoryElement.classList.add('category__item');
@@ -191,6 +211,8 @@ function renderAllTasks({id, name, tasks}) {
   priorityTasks();
   deleteTasks();
   doneTasks();
+  editTasks();
+  summitEdit();
 }
 
 function renderDoneTasks({id, name, tasks}) {
@@ -207,6 +229,8 @@ function renderDoneTasks({id, name, tasks}) {
   priorityTasks();
   deleteTasks();
   doneTasks();
+  editTasks();
+  summitEdit();
 }
 
 function renderPriorityTasks({id, name, tasks}) {
@@ -223,6 +247,8 @@ function renderPriorityTasks({id, name, tasks}) {
   priorityTasks();
   deleteTasks();
   doneTasks();
+  editTasks();
+  summitEdit();
 }
 
 const searchDoneTasks = (tasks) => {
@@ -369,15 +395,11 @@ function priorityTasks() {
       let currentTaskId = btnPriorityTask.parentNode.parentNode.parentNode.id;
       let currentCategoryId = btnPriorityTask.parentNode.parentNode.parentNode.title;
 
-      console.log(currentCategoryId, 'CATEGORY ID')
-      console.log(currentTaskId, 'TASK ID')
-
       // GET THE CURRENT CATEGORY
       let nowCategory = userData.categories.find(category => category.id == currentCategoryId);
 
       // TAKE THE CURREN TASK
       let nowTask = nowCategory.tasks.find(task => task.id == currentTaskId);
-      console.log(nowTask)
       
       // UPDATE CURRENT TASK
       nowTask = {
@@ -413,6 +435,74 @@ function priorityTasks() {
     });
   });
 };
+
+// EDIT TASK
+function editTasks(){
+  const btnsEditTask = document.querySelectorAll('.btn-edit-task-js');
+  const formEditTask = document.querySelector('.edit-form-js');
+  const inputEditName = formEditTask.querySelector('.input-edit-name-js');
+  btnsEditTask.forEach((btnEditTask) => {
+    btnEditTask.removeEventListener('click', openSectionEditTask)
+    btnEditTask.addEventListener('click', (e) => {
+      openSectionEditTask()
+      inputEditName.value = e.target.parentNode.parentNode.parentNode.querySelector('h4').textContent;
+      formEditTask.id = e.target.parentNode.parentNode.parentNode.parentNode.id;
+      formEditTask.title = e.target.parentNode.parentNode.parentNode.parentNode.title;
+    });
+  })
+}
+ 
+function submitEditListen(e, formEditTask) {
+  e.preventDefault();
+
+  let currentTaskId = formEditTask.id;
+  let currentCategoryId = formEditTask.title;
+
+  // GET THE CURRENT CATEGORY
+  let nowCategory = userData.categories.find(category => category.id == currentCategoryId);
+
+  // TAKE THE CURREN TASK
+  let nowTask = nowCategory.tasks.find(task => task.id == currentTaskId);
+
+  const inputEditName = formEditTask.querySelector('.input-edit-name-js');
+
+  // UPDATE CURRENT TASK
+  nowTask = {
+    ...nowTask,
+    name: inputEditName.value,
+  }
+
+  // DELETE THE TASK FROM THE OTHERS TASKS
+  let updateTasks = nowCategory.tasks.filter(task => task.id !== currentTaskId);
+
+  // PUSH THE NEW CURRENT TASK
+  updateTasks.push(nowTask)
+
+  // NOW CURRENT CATEGORY DON'T HAVE THE CURRENT TASK WHAT WE WANNA DELETE
+  nowCategory.tasks = updateTasks;
+
+  // DELETE THE CURRENT CATEGORY FROM THE USERDATA
+  let withoutCurrentCategory = userData.categories.filter(category => category.id !== currentCategoryId);
+
+  // PUSH THE NEW CURRENT CATEGORY WITHOUT THE TASK WHAT WE WANNA DELETE
+  withoutCurrentCategory.push(nowCategory);
+
+  // WE CHANGE THE OLD DATA WITH THE UPDATE DATA
+  userData.categories = withoutCurrentCategory;
+
+  closeSectionEditTask()
+
+  btnShowAllTasks.classList.add('active');
+  btnShowDoneTasks.classList.remove('active');
+  btnShowPriorityTasks.classList.remove('active');
+
+  renderAllTasks(currentCategory);
+}
+
+function summitEdit() {
+  const formEditTask = document.querySelector('.edit-form-js');
+  formEditTask.addEventListener("submit", (e) => submitEditListen(e, formEditTask));
+}
 
 //// SECTION - CATEGORY PROJECTS ////
 const btnCloseSectionCategoryProjects = document.querySelector('.btn-close-section-category-projects-js');
@@ -450,6 +540,12 @@ btnShowPriorityTasks.addEventListener('click', () => {
   
   renderPriorityTasks(currentCategory);
 })
+
+//// SECTION - EDIT TASK ////
+const btnCloseSectionEditTask = document.querySelector('.btn-close-section-edit-task-js');
+btnCloseSectionEditTask.addEventListener('click', () => {
+  closeSectionEditTask();
+});
 
 init();
 
