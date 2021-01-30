@@ -163,14 +163,28 @@
       <!-- Add new task -->
       <section class="add-new-task add-new-task-js">
         <header class="new-task__header">
-          <button class="btn btn--back btn-back-to-category-projects-from-new-task"><img src="./img/icons8-flecha-izquierda-larga-50.png" alt=""></button>
+          <button class="btn btn--back btn-close-section-add-new-task-js"><img src="./img/icons8-flecha-izquierda-larga-50.png" alt=""></button>
           <h3>Add New task</h3>
         </header>
 
-        <form class="new-task__form">
-          <input class="input" type="text" placeholder="New Task Name">
+        <form class="new-task__form add-form-js">
+          <input class="input input-add-name-js" type="text" placeholder="New Task Name">
           
           <input class="submit" type="submit" value="Add task">
+        </form>
+      </section>
+      
+      <!-- Edit task -->
+      <section class="add-new-task edit-task-js">
+        <header class="new-task__header">
+          <button class="btn btn--back btn-close-section-edit-task-js"><img src="./img/icons8-flecha-izquierda-larga-50.png" alt=""></button>
+          <h3>Edit task</h3>
+        </header>
+
+        <form class="new-task__form edit-form-js">
+          <input class="input input-edit-name-js" type="text" placeholder="Task Name">
+          
+          <input class="submit" type="submit" value="Edit task">
         </form>
       </section>
     </div>
