@@ -106,8 +106,50 @@ function showCantOfCreatedTasks() {
   createdTasks.textContent = cantOfCreatedTasks;
 };
 
-function showDateOfToday() {
+const getOrdinalNum = (number) => {
+  let selector;
 
+  if (number <= 0) {
+    selector = 4;
+  } else if ((number > 3 && number < 21) || number % 10 > 3) {
+    selector = 0;
+  } else {
+    selector = number % 10;
+  }
+
+  return number + ['th', 'st', 'nd', 'rd', ''][selector];
+};
+
+function getNameOfDay(day) {
+  if (day == 0) return 'Sunday';
+  else if (day == 1) return 'Monday';
+  else if (day == 2) return 'Tuesday';
+  else if (day == 3) return 'Wednesday';
+  else if (day == 4) return 'Thursday';
+  else if (day == 5) return 'Friday';
+  return 'Saturday';
+}
+
+function showDateOfToday() {
+  const event = new Date();
+  const date = event.getDate();
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][event.getMonth()];
+
+  const currentDayString = document.querySelector('.main-current-day-string-js');
+  const currentDay = document.querySelector('.main-current-day-js');
+  const currentMonth = document.querySelector('.main-current-month-string-js');
+
+  const currentDayString1 = document.querySelector('.category-projects-current-day-string-js');
+  const currentDay1 = document.querySelector('.category-projects-current-day-js');
+  const currentMonth1 = document.querySelector('.category-projects-current-month-string-js');
+
+  currentDayString.textContent = getNameOfDay(date);
+  currentDay.textContent = getOrdinalNum(date);
+  currentMonth.textContent = month;
+
+  currentDayString1.textContent = getNameOfDay(date);
+  currentDay1.textContent = getOrdinalNum(date);
+  currentMonth1.textContent = month;
 };
 
 function showUserName() {
