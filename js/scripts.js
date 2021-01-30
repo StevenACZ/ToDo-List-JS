@@ -115,29 +115,42 @@ function clickOverCategoriesOpenTasks() {
 };
 
 function openSectionAddNewCategory() {
+  const btnOpenSectionAddNewCategory = document.querySelector('.btn-open-section-add-new-category-js');
+  btnOpenSectionAddNewCategory.style.display = 'none';
+  
   const sectionAddNewCategory = document.querySelector('.add-new-category-js');
   sectionAddNewCategory.classList.add('section-active');
 };
 
 function closeSectionAddNewCategory() {
+  const btnOpenSectionAddNewCategory = document.querySelector('.btn-open-section-add-new-category-js');
+  btnOpenSectionAddNewCategory.style.display = 'block';
+  
   const sectionAddNewCategory = document.querySelector('.add-new-category-js');
   sectionAddNewCategory.classList.remove('section-active');
 };
 
 function openSectionCategoryProjects() {
-  const sectionCategoryProjects = document.querySelector('.category-projects-js');
+  const btnOpenSectionAddNewCategory = document.querySelector('.btn-open-section-add-new-category-js');
   const btnOpenSectionAddNewTask = document.querySelector('.btn-open-section-add-new-task-js');
+  btnOpenSectionAddNewCategory.style.display = 'none';
+  btnOpenSectionAddNewTask.style.display = 'block';
+  
+  const sectionCategoryProjects = document.querySelector('.category-projects-js');
   const sectionCategoryProjectsTitle = document.querySelector('.header__information__title-category-projects-js');
   sectionCategoryProjects.classList.add('section-active');
-  btnOpenSectionAddNewTask.style.zIndex = 20;
   sectionCategoryProjectsTitle.textContent = currentCategory.name;
 };
 
 function closeSectionCategoryProjects() {
-  const sectionCategoryProjects = document.querySelector('.category-projects-js');
+  const btnOpenSectionAddNewCategory = document.querySelector('.btn-open-section-add-new-category-js');
   const btnOpenSectionAddNewTask = document.querySelector('.btn-open-section-add-new-task-js');
+  btnOpenSectionAddNewCategory.style.display = 'block';
+  btnOpenSectionAddNewTask.style.display = 'none';
+
+  const sectionCategoryProjects = document.querySelector('.category-projects-js');
   sectionCategoryProjects.classList.remove('section-active');
-  btnOpenSectionAddNewTask.style.zIndex = -20;
+  
   init();
 };
 
