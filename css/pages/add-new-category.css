@@ -56,6 +56,7 @@
       padding: 17px 74px;
       display: block;
       margin: 0 auto;
+      cursor: pointer;
     }
 
     .category__images {
@@ -67,6 +68,7 @@
 
       .category__img {
         padding: 20px;
+        cursor: pointer;
       }
 
       .category__img > [type=radio] {
