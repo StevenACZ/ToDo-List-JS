@@ -38,16 +38,6 @@
   transform: rotate(20deg);
 }
 
-/* .task--priority:before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: -1px;
-  height: 15px;
-  width: 15px;
-  transform: rotate(135deg);
-} */
-
 .task--priority.active {
   border: none;
   background-color: rgb(98,71,182);
