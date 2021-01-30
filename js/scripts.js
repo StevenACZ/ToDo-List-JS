@@ -334,12 +334,12 @@ const drawTask = ({id, name, priority, complete}, categoryName, idCategory) => {
   </div>
   
   <div class="task__info">
-    <div class="info__main">
+    <div class="info__main info__main-js">
       <h4>${name}</h4>
       <p>${categoryName}</p>
     </div>
 
-    <div class="info__more">
+    <div class="info__more info__more-js">
       <button class="btn task--edit btn-edit-task-js">
         <img src="./img/icons8-editar-24.png" alt="edit">
       </button>
@@ -379,6 +379,7 @@ function renderAllTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
+  openOptions();
   priorityTasks();
   deleteTasks();
   doneTasks();
@@ -397,6 +398,7 @@ function renderDoneTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
+  openOptions();
   priorityTasks();
   deleteTasks();
   doneTasks();
@@ -415,6 +417,7 @@ function renderPriorityTasks({id, name, tasks}) {
     gridTasks.appendChild(drawTask(task, name, id));
   })
 
+  openOptions();
   priorityTasks();
   deleteTasks();
   doneTasks();
@@ -486,6 +489,15 @@ formAddNewCategory.addEventListener('submit', (event) => {
 });
 
 //// TASKS OPTIONS ////
+function openOptions() {
+  const infoMains = document.querySelectorAll('.info__main-js');
+  infoMains.forEach((infoMain) => {
+    infoMain.addEventListener('click', () => {
+      infoMain.parentNode.querySelector('.info__more-js').classList.toggle('active');
+    })
+  })
+}
+
 // DELETE TASK
 function deleteTasks() {
   const btnsDeleteTask = document.querySelectorAll('.btn-delete-task-js');
