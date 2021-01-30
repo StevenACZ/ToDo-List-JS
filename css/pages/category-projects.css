@@ -131,6 +131,11 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             justify-items: center;
+            display: none;
+          }
+
+          .info__more.active {
+            display: grid;
           }
 
             .info__more > button > img {
