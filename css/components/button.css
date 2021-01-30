@@ -28,9 +28,7 @@
       width: 25px;
     }
 
-.btn-to-add-new-task {
-  /* z-index: -20; */
-}
+/* .btn-to-add-new-task {} */
 
 .task--priority {
   border: 1px solid rgba(0,0,0,1);
