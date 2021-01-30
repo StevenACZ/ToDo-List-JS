@@ -6,8 +6,8 @@
   /* HEADER */
   .main-menu__header {
     background-image: radial-gradient(circle 382px at 0% 75%, rgb(44,44,101), rgb(107,76,196));
-    min-height: 211px;
-    max-height: 211px;
+    min-height: 260px;
+    max-height: 260px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -17,6 +17,7 @@
     .header__first-look {
       padding: 50px 40px 25px;
       width: 70%;
+      opacity: 0.7;
     }
 
       .first-look__title {
@@ -29,7 +30,7 @@
         font-size: 13px;
       }
 
-        .first-look__subtitle > span {
+        .first-look__subtitle > span:first-child {
           font-weight: bold;
         }
 
@@ -37,6 +38,7 @@
     .header__summary {
       display: flex;
       background-color: rgb(44,44,101);
+      opacity: 0.5;
     }
     
       .summary {
@@ -44,10 +46,14 @@
         padding: 20px 0;
         width: 50%;
         justify-content: center;
+        line-height: 18px;
       }
 
         .summary__cant {
           width: 20%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .summary__name {
@@ -68,12 +74,13 @@
       grid-auto-rows: 140px;
       border-top: 1px solid rgba(0,0,0,0.1);
       border-left: 1px solid rgba(0,0,0,0.1);
-      height: calc(100vh - 211px);
+      height: calc(100vh - 260px);
       overflow-y: scroll;
     }
 
       .category__item {
-        display: flex;
+        display: grid;
+        grid-template-columns: 20% auto;
         justify-content: center;
         color: black;
         padding: 40px 0;
@@ -83,7 +90,6 @@
       }
 
         .item__icon {
-          width: 20%;
         }
 
           .item__icon > img {
@@ -92,8 +98,10 @@
           }
 
         .item__name {
-          width: 40%;
           font-size: 18px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
           .item__name > h4 {
