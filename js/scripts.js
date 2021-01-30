@@ -331,6 +331,10 @@ formAddNewCategory.addEventListener('submit', (event) => {
   };
 
   nameInputCategory.value = '';
+  radioJoob.checked = false;
+  radioSchool.checked = false;
+  radioGrocery.checked = false;
+  radioSchedule.checked = false;
   userData.categories.push(newCategory);
   closeSectionAddNewCategory();
   init();
