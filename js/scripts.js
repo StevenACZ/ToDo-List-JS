@@ -1,5 +1,5 @@
 const userData = {
-  userName: 'Steven',
+  userName: 'Jasson',
   categories: [
     {
       id: 'a123',
@@ -76,17 +76,34 @@ const userData = {
 function init() {
   renderCategories();
   clickOverCategoriesOpenTasks();
-  showCantOfCompleteTasks();
+  showCantOfCompletedTasks();
   showCantOfCreatedTasks();
   showDateOfToday();
+  showUserName();
 }
 
-function showCantOfCompleteTasks() {
+function showCantOfCompletedTasks() {
+  let cantOfCompletedTasks = 0;
+  userData.categories.forEach(category => {
+    category.tasks.forEach(task => {
+      if (task.complete) {
+        cantOfCompletedTasks += 1;
+      }
+    })
+  })
 
+  const completedTasks = document.querySelector('.completed-task-js');
+  completedTasks.textContent = cantOfCompletedTasks;
 };
 
 function showCantOfCreatedTasks() {
+  let cantOfCreatedTasks = 0;
+  userData.categories.forEach(category => {
+    cantOfCreatedTasks += category.tasks.length;
+  })
 
+  const createdTasks = document.querySelector('.created-task-js');
+  createdTasks.textContent = cantOfCreatedTasks;
 };
 
 function showDateOfToday() {
@@ -94,7 +111,8 @@ function showDateOfToday() {
 };
 
 function showUserName() {
-
+  const userName = document.querySelector('.user-name-js');
+  userName.textContent = userData.userName;
 };
 
 function findCategory(categoryItem) {
@@ -150,7 +168,7 @@ function closeSectionCategoryProjects() {
 
   const sectionCategoryProjects = document.querySelector('.category-projects-js');
   sectionCategoryProjects.classList.remove('section-active');
-  
+
   init();
 };
 
