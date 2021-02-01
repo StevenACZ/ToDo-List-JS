@@ -73,11 +73,7 @@ function addNewCategory() {
     closeSectionAddNewCategory();
   });
   
-  formNewCategory();
-}
-
-// FORM NEW CATEGORY
-function formNewCategory() {
+  // FORM NEW CATEGORY
   const formAddNewCategory = document.querySelector('.form-add-new-category-js');
   formAddNewCategory.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -121,6 +117,7 @@ function formNewCategory() {
     init();
   });
 }
+
 
 //////////////////////////////////////
 //// SECTION - CATEGORY PROJECTS ////
@@ -194,11 +191,7 @@ function newTask() {
     closeSectionAddNewTask();
   });
   
-  formAddNewTask();
-}
-
-// FORM ADD NEW TASK
-function formAddNewTask() {
+  // FORM ADD NEW TASK
   const formAddNewTask = document.querySelector('.add-new-task-form-js');
   formAddNewTask.addEventListener('submit', (e) => {
     e.preventDefault();
